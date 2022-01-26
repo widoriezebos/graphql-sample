@@ -1,0 +1,65 @@
+scalar Url
+scalar Date
+scalar NonNegativeInt
+scalar DateTime
+
+type Query {
+    models(name: String): [Model]
+    brands(name: String): [Brand]
+    countries(code: String): [Country]
+}
+
+type Mutation {
+    countryAdd(countryInput: CountryInput!): Country
+}
+
+type Brand{
+   id: ID!
+   name: String!
+   extBrandId: String
+   market: String
+   vehicleType: String
+   recordStatus: String
+   recordDate: String
+   langCode: String
+   importer: String
+   sourceInfo: String
+   models: [Model]
+}
+
+type Model {
+   id: ID!
+   name: String!
+   brand: Brand!
+   extModelId: String
+   extBrandId: String
+   market: Market
+   vehicleType: String
+   langCode: String
+   modelBegin: Int
+   modelEnd: Int
+   modelSuccesor: Model
+   modelPrevious: Model
+   sourceInfo: String
+}
+
+type Market {
+   id: ID!
+   name : String!
+   country: Country
+}
+
+type Country {
+   id: ID!
+   name : String!
+   markets: [Market] 
+}
+
+input CountryInput {
+   name : String!
+   markets: [MarketInput] 
+}
+
+input MarketInput {
+   name : String!
+}
